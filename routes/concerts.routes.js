@@ -28,17 +28,18 @@ router.get('/:id', (req, res) => {
 
 // POST /api/concerts
 router.post('/', (req, res) => {
-  const { day, seat, client, email } = req.body;
+  const { performer, genre, price, day, image } = req.body;
 
-  const hasRequiredFields = day && seat && client && email;
+  const hasRequiredFields = performer && genre && price && day && image;
   if (!hasRequiredFields) return res.status(400).json({ message: 'Missing required fields in request body' });
 
   const newSeat = {
     id: shortid(),
+    performer,
+    genre,
+    price,
     day,
-    seat,
-    client,
-    email,
+    image,
   };
 
   db.seats.push(newSeat);
@@ -53,11 +54,14 @@ router.put('/:id', (req, res) => {
 
   if (!concert) return res.status(404).json({ message: 'Concert not found' });
 
-  concert.performer = performer || concert.performer;
-  concert.genre = genre || concert.genre;
-  concert.price = price || concert.price;
-  concert.day = day || concert.day;
-  concert.image = image || concert.image;
+  const hasRequiredFields = performer && genre && price && day && image;
+  if (!hasRequiredFields) return res.status(400).json({ message: 'Missing required fields in request body' });
+
+  concert.performer = performer;
+  concert.genre = genre;
+  concert.price = price;
+  concert.day = day;
+  concert.image = image;
 
   res.json({ message: 'OK' });
 });

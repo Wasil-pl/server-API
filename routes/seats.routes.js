@@ -9,6 +9,13 @@ router.get('/', (req, res) => {
   res.json(db.seats);
 });
 
+// GET /api/seats/random
+router.get('/random', (req, res) => {
+  const randomIndex = Math.floor(Math.random() * db.seats.length);
+  const randomSeats = db.seats[randomIndex];
+  res.json(randomSeats);
+});
+
 // GET /api/seats/:id
 router.get('/:id', (req, res) => {
   const id = req.params.id;
@@ -46,10 +53,13 @@ router.put('/:id', (req, res) => {
 
   if (!selectedSeat) return res.status(404).json({ message: 'Seat not found' });
 
-  selectedSeat.day = day || selectedSeat.day;
-  selectedSeat.seat = seat || selectedSeat.seat;
-  selectedSeat.client = client || selectedSeat.client;
-  selectedSeat.email = email || selectedSeat.email;
+  const hasRequiredFields = day && seat && client && email;
+  if (!hasRequiredFields) return res.status(400).json({ message: 'Missing required fields in request body' });
+
+  selectedSeat.day = day;
+  selectedSeat.seat = seat;
+  selectedSeat.client = client;
+  selectedSeat.email = email;
 
   res.json({ message: 'OK' });
 });

@@ -11,6 +11,6 @@ app.use('/api/testimonials', testimonialsRoutes);
 app.use('/api/concerts', concertsRoutes);
 app.use('/api/seats', seatsRoutes);
 
-app.use((req, res) => res.status(404).send('404 not found...'));
+app.use((req, res) => res.status(404).json({ message: '404 not found...' }));
 
 app.listen(8000, () => console.log('Server is running on port 8000'));

@@ -53,8 +53,11 @@ router.put('/:id', (req, res) => {
 
   if (!testimonial) return res.status(404).json({ message: 'Testimonial not found' });
 
-  testimonial.author = author || testimonial.author;
-  testimonial.text = text || testimonial.text;
+  const hasAuthorAndText = author && text;
+  if (!hasAuthorAndText) return res.status(400).json({ message: 'Missing author or text in request body' });
+
+  testimonial.author = author;
+  testimonial.text = text;
 
   res.json({ message: 'OK' });
 });

@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
   const hasRequiredFields = performer && genre && price && day && image;
   if (!hasRequiredFields) return res.status(400).json({ message: 'Missing required fields in request body' });
 
-  const newSeat = {
+  const newConcert = {
     id: shortid(),
     performer,
     genre,
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
     image,
   };
 
-  db.seats.push(newSeat);
+  db.concerts.push(newConcert);
   res.status(201).json({ message: 'OK' });
 });
 

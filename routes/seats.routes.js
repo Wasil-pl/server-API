@@ -47,6 +47,7 @@ router.post('/', (req, res) => {
   };
 
   db.seats.push(newSeat);
+  req.io.emit('seatsUpdated', db.seats);
   res.status(201).json({ message: 'OK' });
 });
 

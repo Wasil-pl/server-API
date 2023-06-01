@@ -33,8 +33,6 @@ const io = socket(server);
 
 io.on('connection', (socket) => {
   console.log('New socket! – ' + socket.id);
-
-  //io.to(socket.id).emit('seatsUpdated', seats);
 });
 
 app.use((req, res) => res.status(404).json({ message: '404 not found...' }));

@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const socket = require('socket.io');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -20,9 +21,9 @@ app.use((req, res, next) => {
 
 app.use(cors());
 
-app.use('/api/testimonials', testimonialsRoutes);
-app.use('/api/concerts', concertsRoutes);
-app.use('/api/seats', seatsRoutes);
+app.use('/api', testimonialsRoutes);
+app.use('/api', concertsRoutes);
+app.use('/api', seatsRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
@@ -36,3 +37,11 @@ io.on('connection', (socket) => {
 });
 
 app.use((req, res) => res.status(404).json({ message: '404 not found...' }));
+
+mongoose.connect('mongodb://localhost:27017/music_festival', { useNewUrlParser: true, useFindAndModify: false });
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+db.on('error', (err) => console.log('Error ' + err));

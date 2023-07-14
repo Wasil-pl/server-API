@@ -35,7 +35,7 @@ exports.addNew = async (req, res) => {
     const { performer, genre, price, day, image } = req.body;
     const newConcert = new Concert({ performer: performer, genre: genre, price: price, day: day, image: image });
     await newConcert.save();
-    res.json({ message: 'OK' });
+    res.status(201).res.json({ message: 'OK' });
   } catch (err) {
     res.status(500).json({ message: err });
   }

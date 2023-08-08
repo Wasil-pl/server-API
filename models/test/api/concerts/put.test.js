@@ -24,7 +24,7 @@ describe('PUT /api/concerts', () => {
   it('/:id should update chosen document and return success', async () => {
     const res = await request(server)
       .put('/api/concerts/5d9f1140f10a81216cfd4408')
-      .send({ performer: 'John Doe Updated' });
+      .send({ performer: 'John Doe Updated', genre: 'Rock', price: 25, day: 1, image: '/img/uploads/1fsd324fsdg.jpg' });
     const updatedConcert = await Concert.findOne({ performer: 'John Doe Updated' });
     expect(res.status).to.be.equal(200);
     expect(res.body.message).to.be.equal('OK');

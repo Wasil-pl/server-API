@@ -3,18 +3,17 @@ const expect = require('chai').expect;
 const mongoose = require('mongoose');
 
 describe('Concert', () => {
-  // ten jeden test nie działa, ale nie wiem dlaczego
-  // it('should throw an error if any argument is missing', () => {
-  //   const concert = new Concert({});
+  it('should throw an error if any argument is missing', () => {
+    const concert = new Concert({});
 
-  //   concert.validate((err) => {
-  //     expect(err.errors.performer).to.exist;
-  //     expect(err.errors.genre).to.exist;
-  //     expect(err.errors.price).to.exist;
-  //     expect(err.errors.day).to.exist;
-  //     expect(err.errors.image).to.exist;
-  //   });
-  // });
+    concert.validate((err) => {
+      expect(err.errors.performer).to.exist;
+      expect(err.errors.genre).to.exist;
+      expect(err.errors.price).to.exist;
+      expect(err.errors.day).to.exist;
+      expect(err.errors.image).to.exist;
+    });
+  });
 
   it('should throw an error if "performer", "genre", "image" is not a string', () => {
     const cases = [{}, []];
